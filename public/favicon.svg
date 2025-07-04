@@ -1,0 +1,66 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#082032;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2C394B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334756;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Hexagonal background -->
+  <polygon points="32,4 52,16 52,48 32,60 12,48 12,16" fill="url(#bgGradient)" stroke="#FF4C29" stroke-width="1" opacity="0.9"/>
+  
+  <!-- Inner hexagon border -->
+  <polygon points="32,8 48,18 48,46 32,56 16,46 16,18" fill="none" stroke="#334756" stroke-width="0.5" opacity="0.6"/>
+  
+  <!-- Letter F -->
+  <g filter="url(#glow)">
+    <path d="M18 20 L18 44 M18 20 L28 20 M18 32 L26 32" 
+          stroke="#FF4C29" 
+          stroke-width="3" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          fill="none"/>
+  </g>
+  
+  <!-- Letter I -->
+  <g filter="url(#glow)">
+    <path d="M38 20 L46 20 M42 20 L42 44 M38 44 L46 44" 
+          stroke="#FF4C29" 
+          stroke-width="3" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          fill="none"/>
+  </g>
+  
+  <!-- Corner accents -->
+  <rect x="8" y="8" width="4" height="1" fill="#FF4C29" opacity="0.8"/>
+  <rect x="8" y="8" width="1" height="4" fill="#FF4C29" opacity="0.8"/>
+  
+  <rect x="52" y="8" width="4" height="1" fill="#FF4C29" opacity="0.8"/>
+  <rect x="55" y="8" width="1" height="4" fill="#FF4C29" opacity="0.8"/>
+  
+  <rect x="8" y="55" width="4" height="1" fill="#FF4C29" opacity="0.8"/>
+  <rect x="8" y="52" width="1" height="4" fill="#FF4C29" opacity="0.8"/>
+  
+  <rect x="52" y="55" width="4" height="1" fill="#FF4C29" opacity="0.8"/>
+  <rect x="55" y="52" width="1" height="4" fill="#FF4C29" opacity="0.8"/>
+  
+  <!-- Animated dots -->
+  <circle cx="32" cy="12" r="1" fill="#FF4C29" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="32" cy="52" r="1" fill="#FF4C29" opacity="0.6">
+    <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
