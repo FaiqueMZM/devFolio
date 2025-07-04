@@ -12,6 +12,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { toast } from "sonner";
 
 const contactInfo = [
   {
@@ -67,13 +68,13 @@ export function ContactSection() {
         import.meta.env.VITE_PUBLIC_KEY
       )
       .then(() => {
-        alert("✅ Message sent successfully!");
+        toast.success("Message sent successfully!");
         setFormData({ name: "", email: "", subject: "", message: "" });
         setLoading(false);
       })
       .catch((error: any) => {
         console.error("Email send error:", error);
-        alert("❌ Failed to send the message. Please try again.");
+        toast.error("❌ Failed to send the message. Please try again.");
         setLoading(false);
       });
   };

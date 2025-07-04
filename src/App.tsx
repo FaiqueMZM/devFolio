@@ -6,21 +6,25 @@ import { TechnologiesSection } from "./components/technologies-section";
 import { ProjectsSection } from "./components/projects-section";
 import { ContactSection } from "./components/contact-section";
 import { Footer } from "./components/footer";
+import { Toaster } from "sonner";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#082032] via-[#2C394B] to-[#334756]">
-      <FloatingNav />
-      <main className="relative">
-        <HeroSection />
-        <AboutSection />
-        <ExperienceSection />
-        <TechnologiesSection />
-        <ProjectsSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Toaster richColors />
+      <div className="min-h-screen bg-gradient-to-br from-[#082032] via-[#2C394B] to-[#334756]">
+        <FloatingNav />
+        <main className="relative">
+          <HeroSection />
+          <AboutSection />
+          <ExperienceSection />
+          <TechnologiesSection />
+          <ProjectsSection />
+          <ContactSection />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 
