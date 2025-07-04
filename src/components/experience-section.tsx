@@ -4,31 +4,43 @@ import { Calendar, MapPin, Briefcase } from "lucide-react";
 
 const experiences = [
   {
-    title: "Senior Full Stack Developer",
-    company: "TechCorp Solutions",
-    location: "San Francisco, CA",
-    period: "2022 - Present",
-    description:
-      "Leading development of scalable web applications using React, Node.js, and cloud technologies. Mentoring junior developers and architecting system solutions.",
-    technologies: ["React", "Node.js", "TypeScript", "AWS", "PostgreSQL"],
-  },
-  {
     title: "Full Stack Developer",
-    company: "StartupXYZ",
-    location: "Remote",
-    period: "2020 - 2022",
+    company: "Syntax Erreur",
+    location: "Mumbai, India",
+    period: "2025 Jul - Present",
     description:
-      "Built and maintained multiple client projects from conception to deployment. Collaborated with design and product teams to deliver exceptional user experiences.",
-    technologies: ["Vue.js", "Express.js", "MongoDB", "Docker", "GraphQL"],
+      "Contributing to ongoing web and mobile projects by building robust frontends in React and maintaining scalable backends with Node.js. Collaborating across teams to deliver features end-to-end, improve performance, and ensure code quality through clean architecture and best practices.",
+    technologies: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Prisma ORM",
+      "AWS",
+      "Docker",
+      "REST APIs",
+      "Flutter",
+    ],
   },
   {
-    title: "Frontend Developer",
-    company: "Digital Agency",
-    location: "New York, NY",
-    period: "2019 - 2020",
+    title: "Software Engineer Intern",
+    company: "Syntax Erreur",
+    location: "Mumbai, India",
+    period: "2025 Jan - 2025 Jun",
     description:
-      "Developed responsive web applications and landing pages. Optimized performance and implemented modern frontend practices.",
-    technologies: ["JavaScript", "React", "SASS", "Webpack", "Jest"],
+      "Assisted in full-stack development of multiple client-facing web and mobile applications, contributing to both frontend and backend features. Worked closely with design and product teams to implement responsive UI components and build REST APIs for real-world use cases.",
+    technologies: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Prisma ORM",
+      "AWS",
+      "Docker",
+      "REST APIs",
+    ],
   },
 ];
 
@@ -112,7 +124,7 @@ export function ExperienceSection() {
                           <Badge
                             key={techIndex}
                             variant="secondary"
-                            className="bg-[#334756]/30 text-[#334756] border-[#334756]/20 hover:bg-[#334756]/50 hover:text-white transition-colors"
+                            className="bg-[#334756]/30 text-white/70 border-[#334756]/20 hover:bg-[#334756]/50 hover:text-[#FF4C29] cursor-pointer transition-colors "
                           >
                             {tech}
                           </Badge>
