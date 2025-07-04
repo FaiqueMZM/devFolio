@@ -15,7 +15,7 @@ export function HeroSection() {
       </div>
 
       <div className="container mx-auto text-center relative z-10">
-        <div className="mb-8 md:mt-24">
+        <div className="mb-8 md:mt-22">
           <div className="relative w-54 h-54 md:w-60 md:h-60 mx-auto mb-6">
             {/* Futuristic hexagon container */}
             <div className="relative w-full h-full">
