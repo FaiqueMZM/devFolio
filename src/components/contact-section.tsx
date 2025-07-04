@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Card,
   CardContent,
@@ -13,24 +17,67 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "hello@devfolio.com",
-    href: "mailto:hello@devfolio.com",
+    value: "faiqueinaas@gmail.com",
+    href: "mailto:faiqueinaas@gmail.com",
   },
   {
     icon: Phone,
     title: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
+    value: "+94 (76) 720-8875",
+    href: "tel:+94767208875",
   },
   {
     icon: MapPin,
     title: "Location",
-    value: "San Francisco, CA",
+    value: "Ampara, Sri Lanka",
     href: "#",
   },
 ];
 
 export function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    emailjs
+      .send(
+        import.meta.env.VITE_SERVICE_ID,
+        import.meta.env.VITE_TEMPLATE_ID,
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        import.meta.env.VITE_PUBLIC_KEY
+      )
+      .then(() => {
+        alert("✅ Message sent successfully!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setLoading(false);
+      })
+      .catch((error: any) => {
+        console.error("Email send error:", error);
+        alert("❌ Failed to send the message. Please try again.");
+        setLoading(false);
+      });
+  };
+
   return (
     <section id="contact" className="py-20 px-4 relative">
       <div className="container mx-auto">
@@ -44,7 +91,7 @@ export function ContactSection() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
+          {/* Contact Info Cards */}
           <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold text-white mb-6">
@@ -96,55 +143,78 @@ export function ContactSection() {
                 Send a Message
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
+
+            <form onSubmit={handleSubmit}>
+              <CardContent className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-white/80 text-sm font-medium mb-2 block">
+                      Name
+                    </label>
+                    <Input
+                      name="name"
+                      placeholder="Your name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white/80 text-sm font-medium mb-2 block">
+                      Email
+                    </label>
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="your.email@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="text-white/80 text-sm font-medium mb-2 block">
-                    Name
+                    Subject
                   </label>
                   <Input
-                    placeholder="Your name"
+                    name="subject"
+                    placeholder="What's this about?"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
                     className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
                   />
                 </div>
+
                 <div>
                   <label className="text-white/80 text-sm font-medium mb-2 block">
-                    Email
+                    Message
                   </label>
-                  <Input
-                    type="email"
-                    placeholder="your.email@example.com"
-                    className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
+                  <Textarea
+                    name="message"
+                    placeholder="Tell me about your project..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    required
+                    className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40 resize-none"
                   />
                 </div>
-              </div>
 
-              <div>
-                <label className="text-white/80 text-sm font-medium mb-2 block">
-                  Subject
-                </label>
-                <Input
-                  placeholder="What's this about?"
-                  className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
-                />
-              </div>
-
-              <div>
-                <label className="text-white/80 text-sm font-medium mb-2 block">
-                  Message
-                </label>
-                <Textarea
-                  placeholder="Tell me about your project..."
-                  rows={5}
-                  className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40 resize-none"
-                />
-              </div>
-
-              <Button className="w-full bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0">
-                <Send className="w-4 h-4 mr-2" />
-                Send Message
-              </Button>
-            </CardContent>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0"
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  {loading ? "Sending..." : "Send Message"}
+                </Button>
+              </CardContent>
+            </form>
           </Card>
         </div>
       </div>
