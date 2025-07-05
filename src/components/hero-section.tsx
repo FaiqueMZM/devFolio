@@ -1,6 +1,7 @@
 import { Button } from "../components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import heroImage from "../assets/hero-image.png";
+import cv from "../assets/faiqueinaas.pdf";
 
 export function HeroSection() {
   return (
@@ -72,7 +73,7 @@ export function HeroSection() {
           </p>
 
           <div className=" items-center justify-center gap-4 mt-8">
-            <a href="" download>
+            <a href={cv} download>
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0 px-8 py-3"
