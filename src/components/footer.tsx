@@ -2,7 +2,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative py-8 px-4 border-t border-[#334756]/30 bg-[#082032]/50 backdrop-blur-sm">
+    <footer className="relative pt-8 pb-22 md:pb-8 px-4 border-t border-[#334756]/30 bg-[#082032]/50 backdrop-blur-sm">
       {/* Futuristic accent line */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-0.5 bg-gradient-to-r from-transparent via-[#FF4C29] to-transparent"></div>
 

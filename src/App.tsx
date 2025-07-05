@@ -7,6 +7,7 @@ import { ProjectsSection } from "./components/projects-section";
 import { ContactSection } from "./components/contact-section";
 import { Footer } from "./components/footer";
 import { Toaster } from "sonner";
+import { EducationSection } from "./components/education-section";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <main className="relative">
           <HeroSection />
           <AboutSection />
+          <EducationSection />
           <ExperienceSection />
           <TechnologiesSection />
           <ProjectsSection />
