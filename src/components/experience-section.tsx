@@ -146,7 +146,7 @@ export function ExperienceSection() {
           </div>
 
           {/* Timeline End */}
-          <div className="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 bottom-0 w-8 h-8 bg-gradient-to-br from-[#FF4C29] to-[#334756] rounded-full border-4 border-[#082032] shadow-lg shadow-[#FF4C29]/30">
+          <div className="absolute left-[18px] md:left-1/2 md:transform md:-translate-x-1/2 -bottom-1 w-8 h-8 bg-gradient-to-br from-[#FF4C29] to-[#334756] rounded-full border-4 border-[#082032] shadow-lg shadow-[#FF4C29]/30">
             <div className="absolute inset-2 bg-[#082032] rounded-full"></div>
           </div>
         </div>
