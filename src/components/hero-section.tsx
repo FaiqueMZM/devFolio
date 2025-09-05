@@ -21,7 +21,7 @@ export function HeroSection() {
             {/* Futuristic hexagon container */}
             <div className="relative w-full h-full">
               {/* Outer glowing ring */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FF4C29] via-[#334756] to-[#FF4C29] rounded-full animate-spin-slow opacity-20"></div>
+              <div className="absolute -inset-2 bg-gradient-to-r from-[#FF4C29] via-[#334756] to-[#FF4C29] rounded-full animate-spin-slow opacity-30"></div>
 
               {/* Hexagon image container */}
               <div
@@ -36,7 +36,6 @@ export function HeroSection() {
                   alt="Faique Inaas - Full Stack Developer"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#FF4C29]/20 to-[#334756]/20"></div>
               </div>
 
               {/* Corner accents */}
@@ -117,7 +116,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute -bottom-15 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ArrowDown className="w-6 h-6 text-white/40" />
         </div>
       </div>

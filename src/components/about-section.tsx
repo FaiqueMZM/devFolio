@@ -42,7 +42,7 @@ export function AboutSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+          <div className="space-y-6 text-center">
             <p className="text-white/80 text-lg leading-relaxed">
               Dynamic and detail-oriented Full Stack Developer with a BEng
               (Hons) in Software Engineering, now contributing to innovative web
