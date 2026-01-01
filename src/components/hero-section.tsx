@@ -1,6 +1,6 @@
 import { Button } from "../components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import heroImage from "../assets/hero-image.png";
+import heroImage from "../assets/me.png";
 import cv from "../assets/faiqueinaas.pdf";
 
 export function HeroSection() {
