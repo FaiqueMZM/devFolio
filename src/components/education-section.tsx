@@ -2,6 +2,8 @@
 
 import { Badge } from "../components/ui/badge";
 import { GraduationCap, Calendar, MapPin } from "lucide-react";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { cn } from "../lib/utils";
 
 const education = [
   {
@@ -18,16 +20,36 @@ const education = [
 ];
 
 export function EducationSection() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation({ threshold: 0.15 });
+
   return (
-    <section id="education" className="py-20 px-4 relative overflow-hidden">
+    <section id="education" className="py-20 px-4 relative overflow-hidden" aria-label="Education section">
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-[#FF4C29]/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-[#334756]/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div
+          className={cn(
+            "absolute top-20 left-10 w-32 h-32 bg-[#FF4C29]/10 rounded-full blur-3xl transition-opacity duration-1000",
+            contentVisible ? "opacity-100 animate-pulse" : "opacity-0"
+          )}
+        ></div>
+        <div
+          className={cn(
+            "absolute bottom-20 right-10 w-40 h-40 bg-[#334756]/10 rounded-full blur-3xl transition-opacity duration-1000 delay-500",
+            contentVisible ? "opacity-100 animate-pulse" : "opacity-0"
+          )}
+        ></div>
       </div>
 
       <div className="container mx-auto relative">
-        <div className="text-center mb-16">
+        {/* Section Header with animation */}
+        <div
+          ref={headerRef as React.RefObject<HTMLDivElement>}
+          className={cn(
+            "text-center mb-16 transition-all duration-700 ease-out",
+            headerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
           <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-[#FF4C29] to-[#334756] bg-clip-text text-transparent mb-4">
             Education Journey
           </h2>
@@ -37,13 +59,24 @@ export function EducationSection() {
         </div>
 
         {/* Main Education Display */}
-        <div className="max-w-6xl mx-auto">
+        <div
+          ref={contentRef as React.RefObject<HTMLDivElement>}
+          className="max-w-6xl mx-auto"
+        >
           {/* Current Education */}
           <div className="relative mb-16">
             {education.map((edu, _index) => (
-              <div key={edu.id} className="relative">
+              <div
+                key={edu.id}
+                className={cn(
+                  "relative transition-all duration-700 ease-out",
+                  contentVisible
+                    ? "opacity-100 scale-100"
+                    : "opacity-0 scale-95"
+                )}
+              >
                 {/* Futuristic Diploma Container */}
-                <div className="relative bg-gradient-to-br from-[#2C394B]/30 to-[#334756]/20 backdrop-blur-sm border border-[#FF4C29]/20 rounded-3xl p-8 md:p-12 overflow-hidden">
+                <div className="relative bg-gradient-to-br from-[#2C394B]/30 to-[#334756]/20 backdrop-blur-sm border border-[#FF4C29]/20 rounded-3xl p-8 md:p-12 overflow-hidden hover:border-[#FF4C29]/40 transition-colors duration-300">
                   {/* Animated background grid */}
                   <div className="absolute inset-0 opacity-5">
                     <svg width="100%" height="100%" className="w-full h-full">
@@ -78,7 +111,7 @@ export function EducationSection() {
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
                       <div className="flex items-center gap-4 mb-4 md:mb-0">
                         <div className="w-16 h-16 bg-gradient-to-br from-[#FF4C29] to-[#334756] rounded-full flex items-center justify-center shadow-lg shadow-[#FF4C29]/20">
-                          <GraduationCap className="w-8 h-8 text-white" />
+                          <GraduationCap className="w-8 h-8 text-white" aria-hidden="true" />
                         </div>
                         <div>
                           <Badge className="bg-[#FF4C29]/20 text-[#FF4C29] border-[#FF4C29]/30 mb-2">
@@ -92,11 +125,11 @@ export function EducationSection() {
 
                       <div className="text-right">
                         <div className="flex items-center gap-2 text-[#FF4C29] mb-2">
-                          <Calendar className="w-4 h-4" />
+                          <Calendar className="w-4 h-4" aria-hidden="true" />
                           <span className="font-semibold">{edu.period}</span>
                         </div>
                         <div className="flex items-center gap-2 text-white/60">
-                          <MapPin className="w-4 h-4" />
+                          <MapPin className="w-4 h-4" aria-hidden="true" />
                           <span>{edu.location}</span>
                         </div>
                       </div>
@@ -125,3 +158,4 @@ export function EducationSection() {
     </section>
   );
 }
+

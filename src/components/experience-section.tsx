@@ -1,6 +1,8 @@
 import { Card, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Calendar, MapPin, Briefcase } from "lucide-react";
+import { useScrollAnimation, useStaggerAnimation } from "../hooks/useScrollAnimation";
+import { cn } from "../lib/utils";
 
 const experiences = [
   {
@@ -45,10 +47,20 @@ const experiences = [
 ];
 
 export function ExperienceSection() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: timelineRef, visibleItems } = useStaggerAnimation(experiences.length, 200, { threshold: 0.1 });
+
   return (
-    <section id="experience" className="pb-20 px-4 relative">
+    <section id="experience" className="pb-20 px-4 relative" aria-label="Experience section">
       <div className="container mx-auto">
-        <div className="text-center mb-16">
+        {/* Section Header with animation */}
+        <div
+          ref={headerRef as React.RefObject<HTMLDivElement>}
+          className={cn(
+            "text-center mb-16 transition-all duration-700 ease-out",
+            headerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
           <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-[#FF4C29] to-[#334756] bg-clip-text text-transparent mb-4">
             Experience
           </h2>
@@ -57,14 +69,23 @@ export function ExperienceSection() {
           </p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div ref={timelineRef as React.RefObject<HTMLDivElement>} className="relative max-w-4xl mx-auto">
           {/* Timeline Line */}
           <div className="absolute left-8 md:left-1/2 md:transform md:-translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#FF4C29] via-[#334756] to-[#FF4C29] rounded-full"></div>
 
           {/* Timeline Items */}
           <div className="space-y-12">
             {experiences.map((exp, index) => (
-              <div key={index} className="relative">
+              <article
+                key={index}
+                className={cn(
+                  "relative transition-all duration-700 ease-out",
+                  visibleItems[index]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
                 {/* Timeline Node */}
                 <div className="absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 w-5 h-5 bg-[#FF4C29] rounded-full border-4 border-[#082032] shadow-lg shadow-[#FF4C29]/50 z-10">
                   <div className="absolute inset-0 bg-[#FF4C29] rounded-full animate-ping opacity-20"></div>
@@ -78,7 +99,7 @@ export function ExperienceSection() {
                       : "md:ml-auto md:pl-8"
                   }`}
                 >
-                  <Card className="bg-[#2C394B]/30 border-[#334756]/30 backdrop-blur-sm hover:bg-[#2C394B]/50 transition-all duration-300 relative">
+                  <Card className="bg-[#2C394B]/30 border-[#334756]/30 backdrop-blur-sm hover:bg-[#2C394B]/50 transition-all duration-300 relative hover:scale-[1.02] hover:shadow-lg hover:shadow-[#FF4C29]/10">
                     {/* Arrow pointing to timeline */}
                     <div
                       className={`absolute top-6 w-0 h-0 border-t-8 border-b-8 border-t-transparent border-b-transparent ${
@@ -94,7 +115,7 @@ export function ExperienceSection() {
                         <Badge className="bg-[#FF4C29]/20 text-[#FF4C29] border-[#FF4C29]/30 text-sm font-semibold">
                           {exp.period}
                         </Badge>
-                        <Briefcase className="w-5 h-5 text-[#FF4C29]" />
+                        <Briefcase className="w-5 h-5 text-[#FF4C29]" aria-hidden="true" />
                       </div>
 
                       {/* Job Title & Company */}
@@ -107,7 +128,7 @@ export function ExperienceSection() {
                             {exp.company}
                           </span>
                           <div className="flex items-center gap-1 text-sm">
-                            <MapPin className="w-4 h-4" />
+                            <MapPin className="w-4 h-4" aria-hidden="true" />
                             {exp.location}
                           </div>
                         </div>
@@ -137,11 +158,11 @@ export function ExperienceSection() {
                 {/* Timeline Date (Mobile) */}
                 <div className="md:hidden absolute left-0 top-0 -translate-x-full pr-4">
                   <div className="flex items-center text-[#FF4C29] text-sm font-semibold">
-                    <Calendar className="w-4 h-4 mr-1" />
+                    <Calendar className="w-4 h-4 mr-1" aria-hidden="true" />
                     {exp.period.split(" - ")[0]}
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
 
@@ -154,3 +175,4 @@ export function ExperienceSection() {
     </section>
   );
 }
+

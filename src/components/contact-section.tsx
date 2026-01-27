@@ -13,6 +13,11 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { toast } from "sonner";
+import {
+  useScrollAnimation,
+  useStaggerAnimation,
+} from "../hooks/useScrollAnimation";
+import { cn } from "../lib/utils";
 
 const contactInfo = [
   {
@@ -44,9 +49,20 @@ export function ContactSection() {
   });
 
   const [loading, setLoading] = useState(false);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({
+    threshold: 0.2,
+  });
+  const { ref: infoRef, visibleItems } = useStaggerAnimation(
+    contactInfo.length,
+    150,
+    { threshold: 0.1 },
+  );
+  const { ref: formRef, isVisible: formVisible } = useScrollAnimation({
+    threshold: 0.1,
+  });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -65,14 +81,14 @@ export function ContactSection() {
           subject: formData.subject,
           message: formData.message,
         },
-        import.meta.env.VITE_PUBLIC_KEY
+        import.meta.env.VITE_PUBLIC_KEY,
       )
       .then(() => {
         toast.success("Message sent successfully!");
         setFormData({ name: "", email: "", subject: "", message: "" });
         setLoading(false);
       })
-      .catch((error: any) => {
+      .catch((error: unknown) => {
         console.error("Email send error:", error);
         toast.error("❌ Failed to send the message. Please try again.");
         setLoading(false);
@@ -80,9 +96,22 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 relative">
+    <section
+      id="contact"
+      className="py-20 px-4 relative"
+      aria-label="Contact section"
+    >
       <div className="container mx-auto">
-        <div className="text-center mb-16">
+        {/* Section Header with animation */}
+        <div
+          ref={headerRef as React.RefObject<HTMLDivElement>}
+          className={cn(
+            "text-center mb-16 transition-all duration-700 ease-out",
+            headerVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8",
+          )}
+        >
           <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-[#FF4C29] to-[#334756] bg-clip-text text-transparent mb-4">
             Contact Me
           </h2>
@@ -105,18 +134,30 @@ export function ContactSection() {
               </p>
             </div>
 
-            <div className="space-y-6">
+            <div
+              ref={infoRef as React.RefObject<HTMLDivElement>}
+              className="space-y-6"
+            >
               {contactInfo.map((info, index) => {
                 const Icon = info.icon;
                 return (
                   <Card
                     key={index}
-                    className="bg-[#2C394B]/30 border-[#334756]/30 backdrop-blur-sm hover:bg-[#2C394B]/50 transition-all duration-300"
+                    className={cn(
+                      "bg-[#2C394B]/30 border-[#334756]/30 backdrop-blur-sm hover:bg-[#2C394B]/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#FF4C29]/10",
+                      visibleItems[index]
+                        ? "opacity-100 translate-x-0"
+                        : "opacity-0 -translate-x-8",
+                    )}
+                    style={{ transitionDelay: `${index * 100}ms` }}
                   >
                     <CardContent className="p-6">
                       <div className="flex items-center space-x-4">
                         <div className="p-3 bg-[#FF4C29]/10 rounded-lg">
-                          <Icon className="w-6 h-6 text-[#FF4C29]" />
+                          <Icon
+                            className="w-6 h-6 text-[#FF4C29]"
+                            aria-hidden="true"
+                          />
                         </div>
                         <div>
                           <h4 className="text-white font-semibold">
@@ -137,8 +178,16 @@ export function ContactSection() {
             </div>
           </div>
 
-          {/* Contact Form */}
-          <Card className="bg-[#2C394B]/30 border-[#334756]/30 backdrop-blur-sm">
+          {/* Contact Form with animation */}
+          <Card
+            ref={formRef as React.RefObject<HTMLDivElement>}
+            className={cn(
+              "bg-[#2C394B]/30 border-[#334756]/30 backdrop-blur-sm transition-all duration-700 ease-out",
+              formVisible
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 translate-x-8",
+            )}
+          >
             <CardHeader>
               <CardTitle className="text-white text-xl">
                 Send a Message
@@ -158,7 +207,7 @@ export function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
+                      className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40 focus:ring-[#FF4C29]/50"
                     />
                   </div>
                   <div>
@@ -172,7 +221,7 @@ export function ContactSection() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
+                      className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40 focus:ring-[#FF4C29]/50"
                     />
                   </div>
                 </div>
@@ -187,7 +236,7 @@ export function ContactSection() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40"
+                    className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40 focus:ring-[#FF4C29]/50"
                   />
                 </div>
 
@@ -202,16 +251,16 @@ export function ContactSection() {
                     onChange={handleChange}
                     rows={5}
                     required
-                    className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40 resize-none"
+                    className="bg-[#334756]/20 border-[#334756]/40 text-white placeholder:text-white/40 resize-none focus:ring-[#FF4C29]/50"
                   />
                 </div>
 
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0"
+                  className="w-full bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0 hover:scale-[1.02] transition-transform duration-300"
                 >
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send className="w-4 h-4 mr-2" aria-hidden="true" />
                   {loading ? "Sending..." : "Send Message"}
                 </Button>
               </CardContent>

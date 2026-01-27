@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { cn } from "../lib/utils";
 
 const technologies = [
   {
@@ -171,6 +173,8 @@ export function TechnologiesSection() {
   const [animatedConnections, setAnimatedConnections] = useState<Set<number>>(
     new Set()
   );
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: containerRef, isVisible: containerVisible } = useScrollAnimation({ threshold: 0.1 });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -193,9 +197,16 @@ export function TechnologiesSection() {
   }, []);
 
   return (
-    <section id="technologies" className="py-20 px-4 relative overflow-hidden">
+    <section id="technologies" className="py-20 px-4 relative overflow-hidden" aria-label="Technologies section">
       <div className="container mx-auto">
-        <div className="text-center mb-16">
+        {/* Section Header with animation */}
+        <div
+          ref={headerRef as React.RefObject<HTMLDivElement>}
+          className={cn(
+            "text-center mb-16 transition-all duration-700 ease-out",
+            headerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
           <h2 className="pb-1 text-3xl md:text-5xl font-bold bg-gradient-to-r from-[#FF4C29] to-[#334756] bg-clip-text text-transparent mb-4">
             Technologies
           </h2>
@@ -204,7 +215,13 @@ export function TechnologiesSection() {
           </p>
         </div>
 
-        <div className="relative w-full h-[600px] md:h-[700px] bg-[#2C394B]/20 rounded-2xl border border-[#334756]/30 backdrop-blur-sm overflow-hidden">
+        <div
+          ref={containerRef as React.RefObject<HTMLDivElement>}
+          className={cn(
+            "relative w-full h-[600px] md:h-[700px] bg-[#2C394B]/20 rounded-2xl border border-[#334756]/30 backdrop-blur-sm overflow-hidden transition-all duration-700 ease-out",
+            containerVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          )}
+        >
           {/* Grid background */}
           <div className="absolute inset-0 opacity-10">
             <svg width="100%" height="100%" className="w-full h-full">

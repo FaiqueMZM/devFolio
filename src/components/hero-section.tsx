@@ -2,12 +2,18 @@ import { Button } from "../components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import heroImage from "../assets/me.png";
 import cv from "../assets/faiqueinaas.pdf";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { cn } from "../lib/utils";
 
 export function HeroSection() {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section
       id="hero"
+      ref={ref as React.RefObject<HTMLElement>}
       className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden"
+      aria-label="Hero introduction"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -16,7 +22,15 @@ export function HeroSection() {
       </div>
 
       <div className="container mx-auto text-center relative z-10">
-        <div className="mb-8 md:mt-22">
+        {/* Profile Image with entrance animation */}
+        <div
+          className={cn(
+            "mb-8 md:mt-22 transition-all duration-700 ease-out",
+            isVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+          )}
+        >
           <div className="relative w-54 h-54 md:w-60 md:h-60 mx-auto mb-6">
             {/* Futuristic hexagon container */}
             <div className="relative w-full h-full">
@@ -47,47 +61,111 @@ export function HeroSection() {
           </div>
         </div>
 
+        {/* Text content with stagger animation */}
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
-              <p className="text-lg md:text-xl text-white/80 font-light">
+              <p
+                className={cn(
+                  "text-lg md:text-xl text-white/80 font-light transition-all duration-700 ease-out",
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: "100ms" }}
+              >
                 Hi I'm
               </p>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-[#FF4C29] via-[#334756] to-[#FF4C29] bg-clip-text text-transparent">
+              <h1
+                className={cn(
+                  "text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-[#FF4C29] via-[#334756] to-[#FF4C29] bg-clip-text text-transparent transition-all duration-700 ease-out",
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: "200ms" }}
+              >
                 Faique Inaas
               </h1>
-              <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white/90">
+              <h2
+                className={cn(
+                  "text-2xl md:text-4xl lg:text-5xl font-semibold text-white/90 transition-all duration-700 ease-out",
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: "300ms" }}
+              >
                 I am a Full Stack Developer
               </h2>
             </div>
-            <p className="text-xl md:text-2xl text-[#FF4C29]/80 font-light">
+            <p
+              className={cn(
+                "text-xl md:text-2xl text-[#FF4C29]/80 font-light transition-all duration-700 ease-out",
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              )}
+              style={{ transitionDelay: "400ms" }}
+            >
               Welcome to my DevFolio
             </p>
           </div>
 
-          <p className="text-lg md:hidden text-white/60 max-w-2xl mx-auto leading-relaxed">
+          <p
+            className={cn(
+              "text-lg md:hidden text-white/60 max-w-2xl mx-auto leading-relaxed transition-all duration-700 ease-out",
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            )}
+            style={{ transitionDelay: "500ms" }}
+          >
             Crafting innovative web experiences with cutting-edge technologies.
             Passionate about creating scalable solutions that push the
             boundaries of what's possible.
           </p>
 
-          <div className=" items-center justify-center gap-4 mt-8">
-            <a href={cv} download>
+          {/* Download CV button with animation */}
+          <div
+            className={cn(
+              "items-center justify-center gap-4 mt-8 transition-all duration-700 ease-out",
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            )}
+            style={{ transitionDelay: "600ms" }}
+          >
+            <a href={cv} download aria-label="Download CV">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0 px-8 py-3"
+                className="bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0 px-8 py-3 hover:scale-105 transition-transform duration-300"
               >
                 Download CV
               </Button>
             </a>
           </div>
 
-          <div className="flex items-center justify-center space-x-6 mt-8">
-            <a href="https://github.com/FaiqueMZM" target="_blank">
+          {/* Social links with stagger animation */}
+          <div
+            className={cn(
+              "flex items-center justify-center space-x-6 mt-8 transition-all duration-700 ease-out",
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            )}
+            style={{ transitionDelay: "700ms" }}
+          >
+            <a
+              href="https://github.com/FaiqueMZM"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Profile"
+            >
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-white/60 hover:text-[#FF4C29] p-2"
+                className="text-white/60 hover:text-[#FF4C29] p-2 hover:scale-110 transition-transform duration-300"
               >
                 <Github className="w-6 h-6" />
               </Button>
@@ -95,20 +173,27 @@ export function HeroSection() {
             <a
               href="https://www.linkedin.com/in/faique-inaas-mzm/"
               target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
             >
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-white/60 hover:text-[#FF4C29] p-2"
+                className="text-white/60 hover:text-[#FF4C29] p-2 hover:scale-110 transition-transform duration-300"
               >
                 <Linkedin className="w-6 h-6" />
               </Button>
             </a>
-            <a href="mailto:faiqueinaas@gmail.com" target="_blank">
+            <a
+              href="mailto:faiqueinaas@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Email Contact"
+            >
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-white/60 hover:text-[#FF4C29] p-2"
+                className="text-white/60 hover:text-[#FF4C29] p-2 hover:scale-110 transition-transform duration-300"
               >
                 <Mail className="w-6 h-6" />
               </Button>
@@ -116,10 +201,12 @@ export function HeroSection() {
           </div>
         </div>
 
+        {/* Scroll indicator */}
         <div className="absolute -bottom-15 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ArrowDown className="w-6 h-6 text-white/40" />
+          <ArrowDown className="w-6 h-6 text-white/40" aria-hidden="true" />
         </div>
       </div>
     </section>
   );
 }
+
