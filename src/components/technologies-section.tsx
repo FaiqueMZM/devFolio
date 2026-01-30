@@ -22,7 +22,7 @@ const technologies = [
   {
     name: "TypeScript",
     icon: "https://img.icons8.com/?size=100&id=Xf1sHBmY73hA&format=png&color=000000",
-    x: 53,
+    x: 60,
     y: 16,
     category: "frontend",
   },
@@ -117,7 +117,7 @@ const technologies = [
     name: "AWS",
     icon: "https://img.icons8.com/?size=100&id=33039&format=png&color=000000",
     x: 90,
-    y: 30,
+    y: 35,
     category: "devops",
   },
   {
