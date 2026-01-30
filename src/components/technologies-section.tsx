@@ -8,36 +8,43 @@ const technologies = [
   {
     name: "React",
     icon: "https://img.icons8.com/?size=100&id=asWSSTBrDlTW&format=png&color=000000",
-    x: 20,
-    y: 25,
+    x: 16,
+    y: 20,
     category: "frontend",
   },
   {
     name: "Redux",
     icon: "https://img.icons8.com/?size=100&id=jD-fJzVguBmw&format=png&color=000000",
     x: 35,
-    y: 15,
+    y: 10,
     category: "frontend",
   },
   {
     name: "TypeScript",
     icon: "https://img.icons8.com/?size=100&id=Xf1sHBmY73hA&format=png&color=000000",
-    x: 50,
-    y: 20,
+    x: 53,
+    y: 16,
     category: "frontend",
   },
   {
     name: "Bootstrap",
     icon: "https://img.icons8.com/?size=100&id=EzPCiQUqWWEa&format=png&color=000000",
-    x: 65,
-    y: 30,
+    x: 70,
+    y: 28,
     category: "frontend",
   },
   {
     name: "Tailwind",
     icon: "https://img.icons8.com/?size=100&id=x7XMNGh2vdqA&format=png&color=000000",
-    x: 80,
-    y: 25,
+    x: 90,
+    y: 16,
+    category: "frontend",
+  },
+  {
+    name: "Flutter",
+    icon: "https://img.icons8.com/?size=100&id=7I3BjCqe9rjG&format=png&color=000000",
+    x: 50,
+    y: 31,
     category: "frontend",
   },
 
@@ -51,14 +58,14 @@ const technologies = [
   {
     name: "Express",
     icon: "https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=000000",
-    x: 30,
+    x: 35,
     y: 45,
     category: "backend",
   },
   {
     name: "Python",
     icon: "https://img.icons8.com/?size=100&id=lXPUSRCongH1&format=png&color=000000",
-    x: 45,
+    x: 50,
     y: 55,
     category: "backend",
   },
@@ -109,8 +116,8 @@ const technologies = [
   {
     name: "AWS",
     icon: "https://img.icons8.com/?size=100&id=33039&format=png&color=000000",
-    x: 85,
-    y: 40,
+    x: 90,
+    y: 30,
     category: "devops",
   },
   {
@@ -130,51 +137,67 @@ const technologies = [
 ];
 
 const connections = [
-  // Frontend connections
-  [0, 1],
-  [1, 2],
-  [2, 3],
-  [3, 4],
-  [0, 2],
-  [1, 3],
+  // FRONTEND
+  [0, 1], // React - Redux
+  [0, 2], // React - TypeScript
+  [0, 3], // React - Bootstrap
+  [0, 4], // React - Tailwind
+  [1, 2], // Redux - TypeScript
 
-  // Backend connections
-  [5, 6],
-  [6, 7],
-  [7, 8],
-  [8, 9],
-  [5, 7],
-  [6, 8],
+  // FRONTEND → BACKEND
+  [0, 9], // React - REST API
+  [1, 9], // Redux - REST API
+  [2, 5], // TypeScript - Node
+  [16, 0], // Vercel - React
+  [16, 5], // Vercel - Node
 
-  // Database connections
-  [10, 11],
-  [11, 12],
-  [12, 13],
-  [10, 12],
+  // BACKEND
+  [5, 6], // Node - Express
+  [6, 9], // Express - REST API
+  [5, 2], // Node - TypeScript
+  [7, 9], // Python - REST API
+  [7, 15], // Python - AWS
 
-  // Cross-category connections
-  [0, 5], // React ↔ Node.js
-  [2, 7], // TypeScript ↔ Python
-  [4, 9], // Tailwind ↔ REST API
-  [1, 6], // Redux ↔ Express
-  [3, 8], // Bootstrap ↔ REST API
-  [5, 10], // Node.js ↔ PostgreSQL
-  [7, 11], // Python ↔ MongoDB
-  [9, 13], // REST API ↔ SQLite
-  [6, 12], // Express ↔ MySQL
+  // BACKEND → DATABASE
+  [6, 10], // Express - PostgreSQL
+  [6, 11], // Express - MongoDB
+  [6, 12], // Express - MySQL
+  [5, 11], // Node - MongoDB
+  [5, 10], // Node - PostgreSQL
+  [7, 13], // Python - SQLite
+  [7, 10], // Python - PostgreSQL
+  [7, 11], // Python - MongoDB
 
-  [14, 5], // Docker ↔ Node.js
-  [15, 9], // AWS ↔ REST API
-  [16, 1], // Vercel ↔ Redux
+  // REST API → DB
+  [9, 10], // REST - PostgreSQL
+  [9, 11], // REST - MongoDB
+  [9, 12], // REST - MySQL
+  [9, 13], // REST - SQLite
+
+  // DEVOPS
+  [14, 5], // Docker - Node
+  [14, 7], // Docker - Python
+  [14, 10], // Docker - PostgreSQL
+  [14, 11], // Docker - MongoDB
+  [15, 5], // AWS - Node
+  [15, 10], // AWS - PostgreSQL
+  [15, 11], // AWS - MongoDB
+  [17, 5], // Git - Node
+  [17, 0], // Git - React
+  [17, 14], // Git - Docker
 ];
 
 export function TechnologiesSection() {
   const [activeNode, setActiveNode] = useState<number | null>(null);
   const [animatedConnections, setAnimatedConnections] = useState<Set<number>>(
-    new Set()
+    new Set(),
   );
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: containerRef, isVisible: containerVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({
+    threshold: 0.2,
+  });
+  const { ref: containerRef, isVisible: containerVisible } = useScrollAnimation(
+    { threshold: 0.1 },
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -197,14 +220,20 @@ export function TechnologiesSection() {
   }, []);
 
   return (
-    <section id="technologies" className="py-20 px-4 relative overflow-hidden" aria-label="Technologies section">
+    <section
+      id="technologies"
+      className="py-20 px-4 relative overflow-hidden"
+      aria-label="Technologies section"
+    >
       <div className="container mx-auto">
         {/* Section Header with animation */}
         <div
           ref={headerRef as React.RefObject<HTMLDivElement>}
           className={cn(
             "text-center mb-16 transition-all duration-700 ease-out",
-            headerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            headerVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8",
           )}
         >
           <h2 className="pb-1 text-3xl md:text-5xl font-bold bg-gradient-to-r from-[#FF4C29] to-[#334756] bg-clip-text text-transparent mb-4">
@@ -219,7 +248,7 @@ export function TechnologiesSection() {
           ref={containerRef as React.RefObject<HTMLDivElement>}
           className={cn(
             "relative w-full h-[600px] md:h-[700px] bg-[#2C394B]/20 rounded-2xl border border-[#334756]/30 backdrop-blur-sm overflow-hidden transition-all duration-700 ease-out",
-            containerVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            containerVisible ? "opacity-100 scale-100" : "opacity-0 scale-95",
           )}
         >
           {/* Grid background */}
@@ -375,10 +404,10 @@ export function TechnologiesSection() {
                   tech.category === "frontend"
                     ? "bg-cyan-400"
                     : tech.category === "backend"
-                    ? "bg-green-400"
-                    : tech.category === "database"
-                    ? "bg-purple-400"
-                    : "bg-orange-400"
+                      ? "bg-green-400"
+                      : tech.category === "database"
+                        ? "bg-purple-400"
+                        : "bg-orange-400"
                 }
               `}
               ></div>
