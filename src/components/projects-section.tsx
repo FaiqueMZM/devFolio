@@ -804,11 +804,162 @@ const ProjectSVGs = {
       </text>
     </svg>
   ),
+
+  PitwallF1: () => (
+    <svg viewBox="0 0 400 300" className="w-full h-full">
+      <defs>
+        <linearGradient id="tyreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#111" />
+          <stop offset="100%" stopColor="#000" />
+        </linearGradient>
+
+        <linearGradient id="rimGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FF4C29" />
+          <stop offset="100%" stopColor="#334756" />
+        </linearGradient>
+
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      {/* Background */}
+      <rect width="400" height="300" fill="#082032" />
+
+      {/* Outer tyre */}
+      <circle
+        cx="200"
+        cy="150"
+        r="90"
+        fill="url(#tyreGradient)"
+        stroke="#111"
+        strokeWidth="6"
+      />
+
+      {/* Tyre grooves */}
+      {[...Array(12)].map((_, i) => {
+        const angle = (i * 30 * Math.PI) / 180;
+        const x1 = 200 + Math.cos(angle) * 75;
+        const y1 = 150 + Math.sin(angle) * 75;
+        const x2 = 200 + Math.cos(angle) * 90;
+        const y2 = 150 + Math.sin(angle) * 90;
+
+        return (
+          <line
+            key={i}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke="#222"
+            strokeWidth="3"
+          />
+        );
+      })}
+
+      {/* Soft tyre red ring */}
+      <circle
+        cx="200"
+        cy="150"
+        r="80"
+        fill="none"
+        stroke="#FF4C29"
+        strokeWidth="6"
+        filter="url(#glow)"
+      />
+
+      {/* Inner rim */}
+      <circle
+        cx="200"
+        cy="150"
+        r="50"
+        fill="url(#rimGradient)"
+        filter="url(#glow)"
+      />
+
+      {/* Rim spokes */}
+      {[...Array(6)].map((_, i) => {
+        const angle = (i * 60 * Math.PI) / 180;
+        const x = 200 + Math.cos(angle) * 40;
+        const y = 150 + Math.sin(angle) * 40;
+
+        return (
+          <line
+            key={i}
+            x1="200"
+            y1="150"
+            x2={x}
+            y2={y}
+            stroke="#082032"
+            strokeWidth="4"
+          />
+        );
+      })}
+
+      {/* Center hub */}
+      <circle cx="200" cy="150" r="10" fill="#082032" />
+
+      {/* Text */}
+      <text
+        x="200"
+        y="260"
+        textAnchor="middle"
+        fill="#FF4C29"
+        fontSize="20"
+        fontWeight="bold"
+      >
+        PITWALL F1
+      </text>
+
+      {/* Subtle racing line */}
+      <path
+        d="M50 80 Q150 40 250 80 T350 100"
+        fill="none"
+        stroke="#FF4C29"
+        strokeWidth="2"
+        strokeDasharray="8,6"
+        opacity="0.5"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          values="0;-40"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+      </path>
+    </svg>
+  ),
 };
 
 const projects = [
   {
     id: 1,
+    title: "Pitwall F1",
+    description:
+      "Pitwall F1 is an open-source Formula 1 data hub built for fans. It provides race schedules, results, driver standings, and near-live session data using OpenF1. Built fully client-side with React and TypeScript, it integrates Jolpica (Ergast) for historical data and OpenF1 for live updates, delivering a fast, free, and modern F1 experience.",
+    svg: "PitwallF1",
+    technologies: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Zustand",
+      "SWR",
+      "Axios",
+      "Recharts",
+      "OpenF1 API",
+      "Jolpica API",
+    ],
+    liveUrl: "https://pitwallf1-web.vercel.app",
+    githubUrl: "https://github.com/FaiqueMZM/pitwallf1",
+    featured: true,
+  },
+  {
+    id: 2,
     title: "iCars",
     description:
       "The iCars project is a dynamic React web application designed for a car showroom, showcasing vehicles and services. Built with ReactJS and TypeScript, the application utilizes AWS Lambda functions to handle CRUD operations and interacts with REST APIs for seamless data management. AWS RDS and DynamoDB were implemented for efficient storage of inventory and car details, while AWS S3 was used for hosting the application, complemented by AWS CloudFront for optimized content delivery.",
@@ -827,7 +978,7 @@ const projects = [
     featured: true,
   },
   {
-    id: 2,
+    id: 3,
     title: "Smart Surveillance System",
     description:
       "This final year project focuses on automating video surveillance to improve efficiency in violence detection. Utilizing deep learning techniques, the system employs VGG19 for feature extraction and ConvLSTM for analyzing video frames. By leveraging properties such as motion, object interactions, and contextual cues, the model distinguishes between peaceful and violent activities. Trained on the Hockey Fight Dataset, it achieved a 70% accuracy rate. Tools used for development included Python, PyTorch, Jupyter Notebook, and OpenCV, showcasing the integration of AI in security solutions.",
@@ -845,7 +996,7 @@ const projects = [
     featured: true,
   },
   {
-    id: 3,
+    id: 4,
     title: "Future Seekers LK",
     description:
       "As part of an agile group project, Future Seekers LK was developed to facilitate job seeking and hiring processes for applicants and employers. This platform was built using the CodeIgniter framework alongside HTML, CSS, JavaScript, PHP, and MySQL. Throughout the project, I gained valuable experience in understanding client requirements, crafting user stories and personas, and utilizing project management software (Asana). The project involved working through sprints, providing insight into agile methodologies and teamwork in a dynamic environment.",
@@ -856,7 +1007,7 @@ const projects = [
     featured: true,
   },
   {
-    id: 4,
+    id: 5,
     title: "DevFolio",
     description:
       "A modern, responsive portfolio website with futuristic design elements. Features include interactive animations, project showcases, and contact integration.",
@@ -873,7 +1024,7 @@ const projects = [
     featured: true,
   },
   {
-    id: 5,
+    id: 6,
     title: "Inventory Management System",
     description:
       "The Inventory Management System is a comprehensive application designed to manage inventory operations effectively. Initially developed as a command-line interface (CLI) application, it emphasized clean coding principles and implemented software design patterns, including Singleton, Command, Factory,  Builder, and Facade. The project transitioned into a Java Servlet Application using the MVC architecture, with user interfaces built using HTML and JSP. Key features included concurrency handling to ensure smooth client-server interactions, enhancing the application's efficiency and usability.",
@@ -885,7 +1036,7 @@ const projects = [
     featured: false,
   },
   {
-    id: 6,
+    id: 7,
     title: "EduBlog360",
     description:
       "EduBlog360 is a blog web application designed for multiple users to share articles, with an admin review system for publishing content. The project was developed using the Laravel framework, incorporating HTML, CSS, Blade, PHP, and SQLite. This application facilitates a streamlined content management system, allowing for efficient submission, review, and publication processes, ideal for multi-user environments.",
@@ -896,7 +1047,7 @@ const projects = [
     featured: false,
   },
   {
-    id: 7,
+    id: 8,
     title: "Get-A-Ride Cab Service",
     description:
       "Get-A-Ride Cab Service is a Java-based application designed to manage cab service operations using Object-Oriented Programming (OOP) principles and the Model View Controller (MVC) architecture. The project provided hands-on experience in creating UML diagrams, including Activity, Sequence, and Class Diagrams. In addition, it involved documenting detailed test cases for each use case in the system, ensuring comprehensive coverage of functionality and robustness in design.",
@@ -907,7 +1058,7 @@ const projects = [
     featured: false,
   },
   {
-    id: 8,
+    id: 9,
     title: "MS SQL Database Solution",
     description:
       "This project involved designing and implementing a Microsoft SQL database solution tailored to the operational requirements of a hospital. The development process included creating an Entity Relationship Diagram (ERD) at a high level, normalizing the relational schema to 3NF, and conducting comprehensive testing through predefined test cases. The solution provided a robust data management framework ensuring the hospital's operational efficiency.",
@@ -1039,29 +1190,38 @@ export function ProjectsSection() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-4 pt-4">
-                      <a href="" target="_blank" rel="noopener noreferrer">
-                        <Button
-                          size="lg"
-                          className="bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0 px-6"
+                      {project.liveUrl && project.liveUrl !== "#" && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          <ExternalLink className="w-5 h-5 mr-2" />
-                          Live Demo
-                        </Button>
-                      </a>
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button
-                          variant="outline"
-                          size="lg"
-                          className="border-[#FF4C29]/30 text-white hover:bg-[#FF4C29]/10 bg-transparent px-6"
+                          <Button
+                            size="lg"
+                            className="bg-gradient-to-r from-[#FF4C29] to-[#334756] hover:from-[#FF4C29]/80 hover:to-[#334756]/80 text-white border-0 px-6"
+                          >
+                            <ExternalLink className="w-5 h-5 mr-2" />
+                            Live Demo
+                          </Button>
+                        </a>
+                      )}
+
+                      {project.githubUrl && project.githubUrl !== "#" && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          <Github className="w-5 h-5 mr-2" />
-                          View Code
-                        </Button>
-                      </a>
+                          <Button
+                            variant="outline"
+                            size="lg"
+                            className="border-[#FF4C29]/30 text-white hover:bg-[#FF4C29]/10 bg-transparent px-6"
+                          >
+                            <Github className="w-5 h-5 mr-2" />
+                            View Code
+                          </Button>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

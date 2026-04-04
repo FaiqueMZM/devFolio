@@ -9,7 +9,7 @@ const experiences = [
     title: "Full Stack Developer",
     company: "Syntax Erreur",
     location: "Mumbai, India",
-    period: "2025 Jul - Present",
+    period: "2025 Jul - 2026 Mar",
     description:
       "Contributing to ongoing web and mobile projects by building robust frontends in React and maintaining scalable backends with Node.js. Collaborating across teams to deliver features end-to-end, improve performance, and ensure code quality through clean architecture and best practices.",
     technologies: [
